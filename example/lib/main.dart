@@ -27,54 +27,56 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Theme(
-        data: ThemeData(
-          primaryColor: const Color(0xFF2C1C6B),
-          colorScheme: ColorScheme.light().copyWith(secondary: const Color(0xFF200681)),
-          cardColor: const Color(0xFFF8F9FC),
-          textTheme: const TextTheme(bodyText2: TextStyle(fontSize: 20)),
+      theme: ThemeData(
+        primaryColor: const Color(0xFF2C1C6B),
+        colorScheme:
+            ColorScheme.light().copyWith(secondary: const Color(0xFF200681)),
+        cardColor: const Color(0xFFF8F9FC),
+        textTheme: const TextTheme(bodyText2: TextStyle(fontSize: 20)),
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('EditableTextInput'),
         ),
-        child: Scaffold(
-          appBar: AppBar(
-            title: const Text('EditableTextInput'),
-          ),
-          body: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: ListView(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 100),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        MarkdownTextInput(
-                          (String value) => setState(() => description = value),
-                          description,
-                          label: 'Description',
-                          maxLines: 10,
-                          actions: MarkdownType.values,
-                          controller: controller,
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: ListView(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 100),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      MarkdownTextInput(
+                        onChanged: (s) {
+                          setState(() => description = s);
+                        },
+                        maxLines: 10,
+                        minLines: 1,
+                        actions: MarkdownType.values,
+                        controller: controller,
+                        inputDecoration: InputDecoration(
+                            labelText: 'Description', isDense: true),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          controller.clear();
+                        },
+                        child: Text('Clear'),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: MarkdownBody(
+                          data: description,
+                          shrinkWrap: true,
                         ),
-                        TextButton(
-                          onPressed: () {
-                            controller.clear();
-                          },
-                          child: Text('Clear'),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: MarkdownBody(
-                            data: description,
-                            shrinkWrap: true,
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
             ),
           ),
         ),
