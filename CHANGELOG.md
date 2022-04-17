@@ -1,3 +1,7 @@
+## [2.1.0] - 2022/04/17
+* controller should be disposed by user
+* refactoring 
+
 ## [2.0.2] - 2021/10/26
 
 * Add a controller parameter
